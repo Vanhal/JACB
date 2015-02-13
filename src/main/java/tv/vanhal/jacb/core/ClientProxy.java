@@ -1,6 +1,6 @@
 package tv.vanhal.jacb.core;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ClientProxy extends Proxy {
 	

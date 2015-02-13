@@ -1,7 +1,7 @@
 package tv.vanhal.jacb.core;
 
 import tv.vanhal.jacb.TileBench;
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Proxy {
 

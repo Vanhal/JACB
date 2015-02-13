@@ -1,0 +1,7 @@
+{
+	"parent": "jacb:block/topOnly",
+	"textures": {
+		"top": "minecraft:blocks/crafting_table_top",
+		"plank": "minecraft:blocks/planks_oak"
+	}
+}

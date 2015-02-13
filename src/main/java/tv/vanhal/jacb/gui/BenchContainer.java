@@ -35,7 +35,7 @@ public class BenchContainer extends Container {
 	
 	public void onCraftMatrixChanged(IInventory inv) {
 		bench.setInventorySlotContents(9, 
-    			CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, bench.getWorldObj()));
+    			CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, bench.getWorld()));
     	if (init) updateTile();
     }
 	
