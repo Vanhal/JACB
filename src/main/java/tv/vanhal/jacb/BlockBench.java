@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,7 +29,7 @@ public class BlockBench extends BlockContainer {
 		super(Material.wood);
 		setHardness(1.0f);
 		this.setUnlocalizedName(blockName);
-		setCreativeTab(JACB.JACBTab);
+		setCreativeTab(CreativeTabs.tabDecorations);
 	}
 
 	@Override

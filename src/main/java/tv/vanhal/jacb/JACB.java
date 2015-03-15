@@ -1,8 +1,6 @@
 package tv.vanhal.jacb;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -36,14 +34,6 @@ public class JACB {
 	
 	//gui handler
 	public static SimpleGuiHandler guiHandler = new SimpleGuiHandler();
-
-	//Creative Tab
-	public static CreativeTabs JACBTab = new CreativeTabs("JACB") {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.crafting_table);
-		}
-	};
 	
 	//crafting bench Block
 	public static BlockBench bench;
