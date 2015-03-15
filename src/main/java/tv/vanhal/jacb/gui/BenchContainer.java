@@ -9,7 +9,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import tv.vanhal.jacb.JACB;
 import tv.vanhal.jacb.TileBench;
 
 public class BenchContainer extends Container {
