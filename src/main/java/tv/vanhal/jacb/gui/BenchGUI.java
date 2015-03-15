@@ -1,13 +1,13 @@
 package tv.vanhal.jacb.gui;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+
 import org.lwjgl.opengl.GL11;
 
 import tv.vanhal.jacb.TileBench;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 public class BenchGUI extends GuiContainer {
 	protected ResourceLocation background = new ResourceLocation("minecraft", "textures/gui/container/crafting_table.png");
