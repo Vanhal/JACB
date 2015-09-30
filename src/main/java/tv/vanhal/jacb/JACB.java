@@ -12,11 +12,16 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import codechicken.nei.api.API;
+import codechicken.nei.recipe.DefaultOverlayHandler;
+import tv.vanhal.jacb.compat.NeiHandler;
 import tv.vanhal.jacb.core.Proxy;
+import tv.vanhal.jacb.gui.BenchGUI;
 import tv.vanhal.jacb.gui.SimpleGuiHandler;
 import tv.vanhal.jacb.ref.Ref;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -84,6 +89,8 @@ public class JACB {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);
+		if(Loader.isModLoaded("NotEnoughItems"))
+			NeiHandler.init();
 	}
 
 	@EventHandler
