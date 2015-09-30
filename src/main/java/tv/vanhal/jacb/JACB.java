@@ -12,8 +12,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import codechicken.nei.api.API;
-import codechicken.nei.recipe.DefaultOverlayHandler;
 import tv.vanhal.jacb.compat.NeiHandler;
 import tv.vanhal.jacb.core.Proxy;
 import tv.vanhal.jacb.gui.BenchGUI;
