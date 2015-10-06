@@ -88,7 +88,7 @@ public class JACB {
 	public void init(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);
 		if(Loader.isModLoaded("NotEnoughItems"))
-			NeiHandler.init();
+			proxy.registerNeiHandler();
 	}
 
 	@EventHandler
