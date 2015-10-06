@@ -45,6 +45,10 @@ minecraft {
     replace "@VERSION@", project.version
 }
 
+dependencies {
+	compile files('lib/NotEnoughItems-1.7.10-1.0.5.118-dev.jar')
+}
+
 processResources
 {
     // this will ensure that this task is redone when the versions change.
