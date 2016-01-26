@@ -77,7 +77,7 @@ public class TileBench extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
+	public ItemStack removeStackFromSlot(int slot) {
 		if (slots[slot]!=null) {
 			ItemStack stack = slots[slot];
 			slots[slot] = null;
@@ -155,4 +155,5 @@ public class TileBench extends TileEntity implements IInventory {
 	public void clear() {
 		
 	}
+
 }
