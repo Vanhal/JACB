@@ -8,6 +8,10 @@ public class Proxy {
 	public void registerEntities() {
 		GameRegistry.registerTileEntity(TileBench.class, "TileBench");
 	}
+	
+	public void registerNeiHandler(){
+		
+	}
 
 	public boolean isClient() {
 		return false;

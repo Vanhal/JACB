@@ -45,18 +45,17 @@ public class BlockBench extends BlockContainer {
 		}
 		return true;
 	}
-	
+
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		TileBench tileEntity = (TileBench)world.getTileEntity(pos);
 
         if (tileEntity != null) {
             ArrayList<ItemStack> items = getInsides(world, pos);
-            
             for (ItemStack item: items) {
             	dumpItems(world, pos, item);
             }
-            
+
 
             //world.func_147453_f(x, y, z, block);
         }
@@ -69,11 +68,11 @@ public class BlockBench extends BlockContainer {
 		entItem.motionX = (double)((float)world.rand.nextGaussian() * f3);
 		entItem.motionY = (double)((float)world.rand.nextGaussian() * f3 + 0.2F);
 		entItem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
-		
+
 		if (items.hasTagCompound()) {
 			entItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
         }
-		
+
 		world.spawnEntityInWorld(entItem);
 	}
 	
@@ -90,7 +89,7 @@ public class BlockBench extends BlockContainer {
                 }
             }
 		}
-		
+
 		return items;
 	}
 	
@@ -110,7 +109,7 @@ public class BlockBench extends BlockContainer {
     public IIcon getIcon(int side, int meta) {
         return side == 1 ? this.top : Blocks.planks.getBlockTextureFromSide(side);//(side == 0 ? Blocks.planks.getBlockTextureFromSide(side) : (side != 2 && side != 4 ? this.blockIcon : this.front));
     }
-	
+
 	@SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister register) {
 		String iconPrefix = "minecraft:crafting_table";
