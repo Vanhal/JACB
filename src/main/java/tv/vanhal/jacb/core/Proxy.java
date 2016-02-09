@@ -1,6 +1,7 @@
 package tv.vanhal.jacb.core;
 
 import tv.vanhal.jacb.TileBench;
+import tv.vanhal.jacb.compat.JeiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class Proxy {
@@ -9,8 +10,8 @@ public class Proxy {
 		GameRegistry.registerTileEntity(TileBench.class, "TileBench");
 	}
 	
-	public void registerNeiHandler(){
-		
+	public void registerJeiHandler(){
+		JeiHandler.init();
 	}
 
 	public boolean isClient() {

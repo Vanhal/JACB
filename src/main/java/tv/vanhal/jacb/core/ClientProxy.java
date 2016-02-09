@@ -1,7 +1,7 @@
 package tv.vanhal.jacb.core;
 
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-//import tv.vanhal.jacb.compat.NeiHandler;
+import tv.vanhal.jacb.compat.JeiHandler;
 
 public class ClientProxy extends Proxy {
 	
@@ -11,8 +11,7 @@ public class ClientProxy extends Proxy {
 	}
 	
 	@Override
-	public void registerNeiHandler() {
-		//NeiHandler.init();
+	public void registerJeiHandler() {
 	}
 
 	@Override

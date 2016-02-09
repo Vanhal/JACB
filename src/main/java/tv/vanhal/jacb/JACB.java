@@ -12,7 +12,6 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//import tv.vanhal.jacb.compat.NeiHandler;
 import tv.vanhal.jacb.core.Proxy;
 import tv.vanhal.jacb.gui.BenchGUI;
 import tv.vanhal.jacb.gui.SimpleGuiHandler;
@@ -88,8 +87,8 @@ public class JACB {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);
-		//if(Loader.isModLoaded("NotEnoughItems"))
-		//	proxy.registerNeiHandler();
+		if(Loader.isModLoaded("JEI"))
+			proxy.registerJeiHandler();
 	}
 
 	@EventHandler

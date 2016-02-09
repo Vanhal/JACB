@@ -2,8 +2,8 @@
 // For those who want the bleeding edge
 buildscript {
     repositories {
+		maven {
         jcenter()
-        maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
@@ -38,6 +38,11 @@ version = config.mod_version + "." + config.buildNum
 group= "tv.vanhal.jacb" 
 archivesBaseName = "JACB-" + config.minecraft_version
 
+repositories {
+	maven {
+		url "http://dvs1.progwml6.com/files/maven"
+	}
+}
 
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
@@ -45,10 +50,12 @@ minecraft {
     
     replace "@VERSION@", project.version
     mappings = "stable_20"
+	useDepAts = true
 }
 
 dependencies {
-	compile files('lib/NotEnoughItems-1.8-1.0.5.104-dev.jar')
+	//compile files('lib/NotEnoughItems-1.8-1.0.5.104-dev.jar')
+	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":2.25.7.145"
 }
 
 processResources
