@@ -11,7 +11,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -19,8 +19,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockBench extends BlockContainer {
@@ -39,7 +41,7 @@ public class BlockBench extends BlockContainer {
 	}
 	
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			FMLNetworkHandler.openGui(player, JACB.instance, 1, world, pos.getX(), pos.getY(), pos.getZ());
 		}
@@ -94,8 +96,8 @@ public class BlockBench extends BlockContainer {
 	}
 	
 	@Override
-	public int getRenderType() {
-        return 3;
+	public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
     }
 	
 	@SideOnly(Side.CLIENT)
@@ -103,19 +105,5 @@ public class BlockBench extends BlockContainer {
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher()
 			.register(Item.getItemFromBlock(this), 0, new ModelResourceLocation(Ref.MODID + ":" + blockName, "inventory"));
 	}
-	
-	/*
-	@SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        return side == 1 ? this.top : Blocks.planks.getBlockTextureFromSide(side);//(side == 0 ? Blocks.planks.getBlockTextureFromSide(side) : (side != 2 && side != 4 ? this.blockIcon : this.front));
-    }
-
-	@SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister register) {
-		String iconPrefix = "minecraft:crafting_table";
-		blockIcon = register.registerIcon(iconPrefix + "_side");
-		top = register.registerIcon(iconPrefix + "_top");
-		front = register.registerIcon(iconPrefix + "_front");
-    }*/
 
 }
