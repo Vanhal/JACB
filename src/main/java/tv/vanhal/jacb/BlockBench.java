@@ -29,7 +29,7 @@ public class BlockBench extends BlockContainer {
 	public final String blockName = "betterBench";
 
 	protected BlockBench() {
-		super(Material.wood);
+		super(Material.WOOD);
 		setHardness(1.0f);
 		this.setUnlocalizedName(blockName);
 		setCreativeTab(JACB.JACBTab);

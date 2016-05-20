@@ -50,7 +50,7 @@ public class JACB {
 	public static CreativeTabs JACBTab = new CreativeTabs("JACB") {
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.crafting_table);
+			return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
 		}
 	};
 	
@@ -75,9 +75,9 @@ public class JACB {
 		//set recipes
 		ShapelessOreRecipe recipe;
 		if (config.getBoolean("straightSwap", "General", true, "JACB Crafting tables can be crafted by putting a vanilla crafting bench in a crafting grid, other wise it requires a chest as well")) {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.crafting_table);
+			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE);
 		} else {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.crafting_table, Blocks.chest);
+			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST);
 		}
 		GameRegistry.addRecipe(recipe);
 		

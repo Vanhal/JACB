@@ -16,8 +16,8 @@ public class TileBench extends TileEntity implements IInventory {
 	}
 	
 	@Override
-	public final void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
+	public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		nbt = super.writeToNBT(nbt);
 		if (slots.length>0) {
 			NBTTagList contents = new NBTTagList();
 			for (int i = 0; i < slots.length; i++) {
@@ -31,6 +31,7 @@ public class TileBench extends TileEntity implements IInventory {
 			}
 			nbt.setTag("Contents", contents);
 		}
+		return nbt;
 	}
 	
 	@Override
