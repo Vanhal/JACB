@@ -12,25 +12,25 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tv.vanhal.jacb.compat.NeiHandler;
 import tv.vanhal.jacb.core.Proxy;
 import tv.vanhal.jacb.gui.BenchGUI;
 import tv.vanhal.jacb.gui.SimpleGuiHandler;
 import tv.vanhal.jacb.ref.Ref;
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+
 
 @Mod(modid = Ref.MODID, name = Ref.MODNAME, version = Ref.Version)
 public class JACB {
@@ -50,7 +50,7 @@ public class JACB {
 	public static CreativeTabs JACBTab = new CreativeTabs("JACB") {
 		@Override
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.crafting_table);
+			return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
 		}
 	};
 	
@@ -75,9 +75,9 @@ public class JACB {
 		//set recipes
 		ShapelessOreRecipe recipe;
 		if (config.getBoolean("straightSwap", "General", true, "JACB Crafting tables can be crafted by putting a vanilla crafting bench in a crafting grid, other wise it requires a chest as well")) {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.crafting_table);
+			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE);
 		} else {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.crafting_table, Blocks.chest);
+			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST);
 		}
 		GameRegistry.addRecipe(recipe);
 		
@@ -87,13 +87,16 @@ public class JACB {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);
-		if(Loader.isModLoaded("NotEnoughItems"))
-			proxy.registerNeiHandler();
+		if(Loader.isModLoaded("JEI"))
+			proxy.registerJeiHandler();
 	}
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.registerEntities();
+		if (event.getSide() == Side.CLIENT) {
+			bench.postInit();
+		}
 	}
 
 }

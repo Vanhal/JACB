@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.ITextComponent;
 
 public class TileBench extends TileEntity implements IInventory {
 	protected ItemStack[] slots;
@@ -15,8 +16,8 @@ public class TileBench extends TileEntity implements IInventory {
 	}
 	
 	@Override
-	public final void writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
+	public final NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		nbt = super.writeToNBT(nbt);
 		if (slots.length>0) {
 			NBTTagList contents = new NBTTagList();
 			for (int i = 0; i < slots.length; i++) {
@@ -30,6 +31,7 @@ public class TileBench extends TileEntity implements IInventory {
 			}
 			nbt.setTag("Contents", contents);
 		}
+		return nbt;
 	}
 	
 	@Override
@@ -76,7 +78,7 @@ public class TileBench extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
+	public ItemStack removeStackFromSlot(int slot) {
 		if (slots[slot]!=null) {
 			ItemStack stack = slots[slot];
 			slots[slot] = null;
@@ -94,13 +96,18 @@ public class TileBench extends TileEntity implements IInventory {
 	}
 
 	@Override
-	public String getInventoryName() {
+	public String getName() {
 		return null;
 	}
 
 	@Override
-	public boolean hasCustomInventoryName() {
+	public boolean hasCustomName() {
 		return false;
+	}
+
+	@Override
+	public ITextComponent getDisplayName() {
+		return null;
 	}
 
 	@Override
@@ -110,19 +117,44 @@ public class TileBench extends TileEntity implements IInventory {
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this &&
-				 player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
+		return worldObj.getTileEntity(pos) == this &&
+				 player.getDistanceSq(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) < 64;
 	}
 
 	@Override
-	public void openInventory() {}
+	public void openInventory(EntityPlayer playerIn) { }
 
 	@Override
-	public void closeInventory() {}
+	public void closeInventory(EntityPlayer playerIn) { }
 
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemStack) {
 		if (slot==9) return false;
 		return true;
 	}
+
+
+
+
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+		
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	@Override
+	public void clear() {
+		
+	}
+
 }

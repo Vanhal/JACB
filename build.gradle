@@ -1,20 +1,20 @@
+
+// For those who want the bleeding edge
 buildscript {
     repositories {
-        mavenCentral()
-        maven {
+		maven {
+        jcenter()
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
     }
 }
-ENV = System.getenv()
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+def ENV = System.getenv()
 
 ext.configFile = file "build.properties"
 
@@ -33,20 +33,29 @@ configFile.withReader {
 
 //config.buildNum = x - y
 
-apply plugin: 'forge'
 
 version = config.mod_version + "." + config.buildNum
 group= "tv.vanhal.jacb" 
 archivesBaseName = "JACB-" + config.minecraft_version
 
+repositories {
+	maven {
+		url "http://dvs1.progwml6.com/files/maven"
+	}
+}
+
 minecraft {
     version = config.minecraft_version + "-" + config.forge_version
+    runDir = "run"
     
     replace "@VERSION@", project.version
+    mappings = "snapshot_20160518"
+	useDepAts = true
 }
 
 dependencies {
-	compile files('lib/NotEnoughItems-1.7.10-1.0.5.118-dev.jar')
+	//compile files('lib/NotEnoughItems-1.8-1.0.5.104-dev.jar')
+	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":3.4.0.204"
 }
 
 processResources
