@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
@@ -16,6 +17,7 @@ public class BenchContainer extends Container {
 	protected TileBench bench;
 	
 	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
+	public IInventory craftResult = new InventoryCraftResult();
 	protected boolean init = false;
 
 	public BenchContainer(InventoryPlayer inv, TileBench tile) {
@@ -25,7 +27,7 @@ public class BenchContainer extends Container {
 			craftMatrix.setInventorySlotContents(i, bench.getStackInSlot(i));
 		}
 		init = true;
-		this.addSlotToContainer(new SlotCrafting(inv.player, craftMatrix, bench, 9, 124, 35)); //outputslot
+		this.addSlotToContainer(new SlotCrafting(inv.player, craftMatrix, craftResult, 9, 124, 35)); //outputslot
 		addCraftingGrid(craftMatrix, 0, 30, 17, 3, 3); //crafting grid
 		
 		addPlayerInventory(inv);
@@ -34,7 +36,7 @@ public class BenchContainer extends Container {
 	}
 	
 	public void onCraftMatrixChanged(IInventory inv) {
-		bench.setInventorySlotContents(9, 
+		craftResult.setInventorySlotContents(9, 
     			CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, bench.getWorldObj()));
     	if (init) updateTile();
     }
@@ -64,7 +66,7 @@ public class BenchContainer extends Container {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (slotNum == 0)  {
+            if (slotNum == 9)  {
                 if (!this.mergeItemStack(itemstack1, 10, 46, true)) {
                     return null;
                 }
