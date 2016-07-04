@@ -54,8 +54,7 @@ minecraft {
 }
 
 dependencies {
-	//compile files('lib/NotEnoughItems-1.8-1.0.5.104-dev.jar')
-	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":3.4.0.204"
+	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":3.7.3.221"
 }
 
 processResources

@@ -33,3 +33,4 @@ JACB1.8_Client.launch
 JACB1.8_Server.launch
 JACB1.9_Client.launch
 JACB1.9_Server.launch
+*.launch
