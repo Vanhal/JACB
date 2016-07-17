@@ -7,7 +7,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -69,7 +68,6 @@ public class JACB {
 		GameRegistry.registerBlock(bench, bench.blockName);
 		
 		//set recipes
-		IRecipe recipe;
 		int mode = config.getInt("recipeMode", "General", 1, 1, 3, "The recipe-mode for the JACB table."
 				+ "1: Straight swap (just place a crafting bench in the grid)"
 				+ "2: Crafting bench + Chest"
@@ -77,22 +75,20 @@ public class JACB {
 		
 		switch (mode) {
 			case 1:
-				recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE);
+				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE));
 				break;
 			case 2:
-				recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST);
+				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST));
 				break;
 			case 3:
-				recipe = new ShapedOreRecipe(new ItemStack(bench), "BW", "WW");
-				recipe = new ShapedOreRecipe(new ItemStack(bench), "WW", "BW");
-				recipe = new ShapedOreRecipe(new ItemStack(bench), "WB", "WW");
-				recipe = new ShapedOreRecipe(new ItemStack(bench), "WW", "WB");
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "BW", "WW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WW", "BW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WB", "WW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WW", "WB", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
 				break;
 			default:
-				recipe = null;
 				break;
 		}
-		GameRegistry.addRecipe(recipe);
 		
 		config.save();
 	}
