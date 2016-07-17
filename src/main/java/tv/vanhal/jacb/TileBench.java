@@ -40,7 +40,7 @@ public class TileBench extends TileEntity implements IInventory {
 		if (nbt.hasKey("Contents")) {
 			NBTTagList contents = nbt.getTagList("Contents", 10);
 			for (int i = 0; i < contents.tagCount(); i++) {
-				NBTTagCompound tag = (NBTTagCompound) contents.getCompoundTagAt(i);
+				NBTTagCompound tag = contents.getCompoundTagAt(i);
 				byte slot = tag.getByte("Slot");
 				if (slot < slots.length) {
 					slots[slot] = ItemStack.loadItemStackFromNBT(tag);
