@@ -40,14 +40,6 @@ public class JACB {
 	//gui handler
 	public static SimpleGuiHandler guiHandler = new SimpleGuiHandler();
 
-	//Creative Tab
-	public static CreativeTabs JACBTab = new CreativeTabs("JACB") {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
-		}
-	};
-	
 	//crafting bench Block
 	public static BlockBench bench;
 
@@ -65,13 +57,24 @@ public class JACB {
 		
 		//Initialise the block
 		bench = new BlockBench();
+		if (config.getBoolean("newCreativeTab", "general", false, "Should the JACB-bench be placed in a new JACB-creative tab?")) {
+			CreativeTabs JACBTab = new CreativeTabs("JACB") {
+				@Override
+				public Item getTabIconItem() {
+					return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
+				}
+			};
+			bench.setCreativeTab(JACBTab);
+		} else bench.setCreativeTab(CreativeTabs.DECORATIONS);
+		
 		GameRegistry.registerBlock(bench, bench.blockName);
 		
 		//set recipes
-		int mode = config.getInt("recipeMode", "General", 1, 1, 3, "The recipe-mode for the JACB table."
-				+ "1: Straight swap (just place a crafting bench in the grid)"
-				+ "2: Crafting bench + Chest"
-				+ "3: Crafting bench surrounded by 3 wood");
+		int mode = config.getInt("recipeMode", "General", 1, 1, 3, "The recipe-mode for the JACB table.\n"
+				+ "1: Straight swap (just place a crafting bench in the grid)\n"
+				+ "2: Crafting bench + Chest\n"
+				+ "3: Crafting bench surrounded by 3 wood\n"
+				+ "4: Crafting bench surrounded by 8 wood\n");
 		
 		switch (mode) {
 			case 1:
@@ -86,6 +89,8 @@ public class JACB {
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WB", "WW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
 				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WW", "WB", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
 				break;
+			case 4:
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WWW", "WBW", "WWW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
 			default:
 				break;
 		}
