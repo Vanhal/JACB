@@ -1,23 +1,13 @@
 package tv.vanhal.jacb;
 
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import tv.vanhal.jacb.core.Proxy;
-import tv.vanhal.jacb.gui.BenchGUI;
-import tv.vanhal.jacb.gui.SimpleGuiHandler;
-import tv.vanhal.jacb.ref.Ref;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -26,10 +16,14 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import tv.vanhal.jacb.core.Proxy;
+import tv.vanhal.jacb.gui.SimpleGuiHandler;
+import tv.vanhal.jacb.ref.Ref;
 
 
 @Mod(modid = Ref.MODID, name = Ref.MODNAME, version = Ref.Version)
@@ -46,14 +40,6 @@ public class JACB {
 	//gui handler
 	public static SimpleGuiHandler guiHandler = new SimpleGuiHandler();
 
-	//Creative Tab
-	public static CreativeTabs JACBTab = new CreativeTabs("JACB") {
-		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
-		}
-	};
-	
 	//crafting bench Block
 	public static BlockBench bench;
 
@@ -63,6 +49,7 @@ public class JACB {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
@@ -70,20 +57,48 @@ public class JACB {
 		
 		//Initialise the block
 		bench = new BlockBench();
+		if (config.getBoolean("newCreativeTab", "general", false, "Should the JACB-bench be placed in a new JACB-creative tab?")) {
+			CreativeTabs JACBTab = new CreativeTabs("JACB") {
+				@Override
+				public Item getTabIconItem() {
+					return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
+				}
+			};
+			bench.setCreativeTab(JACBTab);
+		} else bench.setCreativeTab(CreativeTabs.DECORATIONS);
+		
 		GameRegistry.registerBlock(bench, bench.blockName);
 		
 		//set recipes
-		ShapelessOreRecipe recipe;
-		if (config.getBoolean("straightSwap", "General", true, "JACB Crafting tables can be crafted by putting a vanilla crafting bench in a crafting grid, other wise it requires a chest as well")) {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE);
-		} else {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST);
+		int mode = config.getInt("recipeMode", "General", 1, 1, 3, "The recipe-mode for the JACB table.\n"
+				+ "1: Straight swap (just place a crafting bench in the grid)\n"
+				+ "2: Crafting bench + Chest\n"
+				+ "3: Crafting bench surrounded by 3 wood\n"
+				+ "4: Crafting bench surrounded by 8 wood\n");
+		
+		switch (mode) {
+			case 1:
+				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE));
+				break;
+			case 2:
+				GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST));
+				break;
+			case 3:
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "BW", "WW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WW", "BW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WB", "WW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WW", "WB", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+				break;
+			case 4:
+				GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(bench), "WWW", "WBW", "WWW", 'B', Blocks.CRAFTING_TABLE, 'W', Blocks.PLANKS));
+			default:
+				break;
 		}
-		GameRegistry.addRecipe(recipe);
 		
 		config.save();
 	}
 
+	@SuppressWarnings("unused")
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, guiHandler);

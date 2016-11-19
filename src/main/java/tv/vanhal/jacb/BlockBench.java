@@ -2,11 +2,6 @@ package tv.vanhal.jacb;
 
 import java.util.ArrayList;
 
-import tv.vanhal.jacb.ref.Ref;
-import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,16 +9,18 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import tv.vanhal.jacb.ref.Ref;
 
 public class BlockBench extends BlockContainer {
 	public final String blockName = "betterBench";
@@ -32,7 +29,6 @@ public class BlockBench extends BlockContainer {
 		super(Material.WOOD);
 		setHardness(1.0f);
 		this.setUnlocalizedName(blockName);
-		setCreativeTab(JACB.JACBTab);
 	}
 
 	@Override
@@ -65,14 +61,14 @@ public class BlockBench extends BlockContainer {
     }
 	
 	public void dumpItems(World world, BlockPos pos, ItemStack items) {
-		EntityItem entItem = new EntityItem(world, (float)pos.getX() + 0.5f, (float)pos.getY() + 0.5f, (float)pos.getZ() + 0.5f, items);
+		EntityItem entItem = new EntityItem(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, items);
 		float f3 = 0.05F;
-		entItem.motionX = (double)((float)world.rand.nextGaussian() * f3);
-		entItem.motionY = (double)((float)world.rand.nextGaussian() * f3 + 0.2F);
-		entItem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
+		entItem.motionX = (float)world.rand.nextGaussian() * f3;
+		entItem.motionY = (float)world.rand.nextGaussian() * f3 + 0.2F;
+		entItem.motionZ = (float)world.rand.nextGaussian() * f3;
 
 		if (items.hasTagCompound()) {
-			entItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
+			entItem.getEntityItem().setTagCompound(items.getTagCompound().copy());
         }
 
 		world.spawnEntityInWorld(entItem);

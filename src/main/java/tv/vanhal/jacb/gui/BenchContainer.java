@@ -2,7 +2,6 @@ package tv.vanhal.jacb.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
@@ -11,7 +10,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
-import tv.vanhal.jacb.JACB;
 import tv.vanhal.jacb.TileBench;
 
 public class BenchContainer extends Container {
@@ -37,6 +35,7 @@ public class BenchContainer extends Container {
 	}
 	
 	
+	@Override
 	public void onCraftMatrixChanged(IInventory inv) {
 		craftResult.setInventorySlotContents(0, 
     			CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, bench.getWorld()));
@@ -62,7 +61,7 @@ public class BenchContainer extends Container {
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(slotNum);
+        Slot slot = this.inventorySlots.get(slotNum);
         
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
