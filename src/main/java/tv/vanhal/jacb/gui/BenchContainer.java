@@ -61,7 +61,7 @@ public class BenchContainer extends Container {
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
-        ItemStack itemstack = null;
+        ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = (Slot)this.inventorySlots.get(slotNum);
         
         if (slot != null && slot.getHasStack()) {
@@ -70,33 +70,33 @@ public class BenchContainer extends Container {
 
             if (slotNum == 9)  {
                 if (!this.mergeItemStack(itemstack1, 10, 46, true)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             } else if (slotNum >= 10 && slotNum < 37) {
                 if (!this.mergeItemStack(itemstack1, 1, 9, false)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (slotNum >= 37 && slotNum < 46) {
                 if (!this.mergeItemStack(itemstack1, 1, 9, false)) {
-                    return null;
+                    return ItemStack.EMPTY;
                 }
             } else if (!this.mergeItemStack(itemstack1, 10, 46, false)) {
-                return null;
+                return ItemStack.EMPTY;
             }
 
-            if (itemstack1.stackSize == 0) {
-                slot.putStack((ItemStack)null);
+            if (itemstack1.getCount() == 0) {
+                slot.putStack(ItemStack.EMPTY);
             } else {
                 slot.onSlotChanged();
             }
 
-            if (itemstack1.stackSize == itemstack.stackSize) {
+            if (itemstack1.getCount() == itemstack.getCount()) {
                 return null;
             }
 
-            slot.onPickupFromSlot(player, itemstack1);
+            slot.onTake(player, itemstack1);
             updateTile();
         }
 

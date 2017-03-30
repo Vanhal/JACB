@@ -1,12 +1,7 @@
-
-// For those who want the bleeding edge
 buildscript {
     repositories {
-		maven {
         jcenter()
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
@@ -49,12 +44,12 @@ minecraft {
     runDir = "run"
     
     replace "@VERSION@", project.version
-    mappings = "snapshot_20160518"
+    mappings = "snapshot_20161220"
 	useDepAts = true
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":3.7.3.221"
+	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":4.2.10.248"
 }
 
 processResources

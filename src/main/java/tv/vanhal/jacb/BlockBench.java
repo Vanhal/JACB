@@ -26,12 +26,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockBench extends BlockContainer {
-	public final String blockName = "betterBench";
+	public final String blockName = "betterbench";
 
 	protected BlockBench() {
 		super(Material.WOOD);
 		setHardness(1.0f);
 		this.setUnlocalizedName(blockName);
+		this.setRegistryName(blockName);
 		setCreativeTab(JACB.JACBTab);
 	}
 
@@ -41,7 +42,7 @@ public class BlockBench extends BlockContainer {
 	}
 	
 	@Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
 			FMLNetworkHandler.openGui(player, JACB.instance, 1, world, pos.getX(), pos.getY(), pos.getZ());
 		}
@@ -75,7 +76,7 @@ public class BlockBench extends BlockContainer {
 			entItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
         }
 
-		world.spawnEntityInWorld(entItem);
+		world.spawnEntity(entItem);
 	}
 	
 	protected ArrayList<ItemStack> getInsides(World world, BlockPos pos) {

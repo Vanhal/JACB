@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -49,8 +50,8 @@ public class JACB {
 	//Creative Tab
 	public static CreativeTabs JACBTab = new CreativeTabs("JACB") {
 		@Override
-		public Item getTabIconItem() {
-			return Item.getItemFromBlock(Blocks.CRAFTING_TABLE);
+		public ItemStack getTabIconItem() {
+			return new ItemStack(Blocks.CRAFTING_TABLE);
 		}
 	};
 	
@@ -70,7 +71,8 @@ public class JACB {
 		
 		//Initialise the block
 		bench = new BlockBench();
-		GameRegistry.registerBlock(bench, bench.blockName);
+		GameRegistry.register(bench);
+		GameRegistry.register(new ItemBlock(bench).setRegistryName(bench.getRegistryName()));
 		
 		//set recipes
 		ShapelessOreRecipe recipe;

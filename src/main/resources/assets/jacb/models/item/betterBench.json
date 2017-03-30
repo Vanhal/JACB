@@ -1,5 +1,5 @@
 {
-    "parent": "jacb:block/betterBench",
+    "parent": "jacb:block/betterbench",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
