@@ -4,7 +4,7 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -17,7 +17,7 @@ configFile.withReader {
     // read config. it shall from now on be referenced as simply config or as project.config
     def prop = new Properties()
     prop.load(it)
-    ext.config = new ConfigSlurper().parse prop
+    project.ext.config = new ConfigSlurper().parse prop
 }
 
 //y = config.droneAlter as Integer
@@ -33,6 +33,11 @@ version = config.mod_version + "." + config.buildNum
 group= "tv.vanhal.jacb" 
 archivesBaseName = "JACB-" + config.minecraft_version
 
+sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
 repositories {
 	maven {
 		url "http://dvs1.progwml6.com/files/maven"
@@ -44,12 +49,12 @@ minecraft {
     runDir = "run"
     
     replace "@VERSION@", project.version
-    mappings = "snapshot_20161220"
+    mappings = config.mappings
 	useDepAts = true
 }
 
 dependencies {
-	deobfCompile "mezz.jei:jei_"+config.minecraft_version+":4.2.10.248"
+	deobfCompile "mezz.jei:jei_1.12:4.+"
 }
 
 processResources
