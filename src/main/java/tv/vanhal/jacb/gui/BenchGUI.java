@@ -5,7 +5,6 @@ import org.lwjgl.opengl.GL11;
 import tv.vanhal.jacb.TileBench;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
 
@@ -18,8 +17,8 @@ public class BenchGUI extends GuiContainer {
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
-		this.fontRendererObj.drawString(I18n.translateToLocal("container.bettercrafting"), 28, 6, 0x404040);
-		this.fontRendererObj.drawString(I18n.translateToLocal("container.inventory"), 8, 74, 0x404040);
+		this.fontRenderer.drawString(I18n.translateToLocal("container.bettercrafting"), 28, 6, 0x404040);
+		this.fontRenderer.drawString(I18n.translateToLocal("container.inventory"), 8, 74, 0x404040);
 	}
 
 	@Override

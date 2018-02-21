@@ -6,7 +6,6 @@ import tv.vanhal.jacb.ref.Ref;
 import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +13,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,7 +35,7 @@ public class BlockBench extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World world, int p_149915_2_) {
+	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileBench();
 	}
 	
@@ -73,7 +71,7 @@ public class BlockBench extends BlockContainer {
 		entItem.motionZ = (double)((float)world.rand.nextGaussian() * f3);
 
 		if (items.hasTagCompound()) {
-			entItem.getEntityItem().setTagCompound((NBTTagCompound)items.getTagCompound().copy());
+			entItem.writeToNBT((NBTTagCompound)items.getTagCompound().copy());
         }
 
 		world.spawnEntity(entItem);

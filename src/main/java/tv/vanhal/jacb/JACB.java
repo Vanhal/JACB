@@ -1,12 +1,12 @@
 package tv.vanhal.jacb;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
@@ -14,11 +14,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import tv.vanhal.jacb.core.Proxy;
-import tv.vanhal.jacb.gui.BenchGUI;
 import tv.vanhal.jacb.gui.SimpleGuiHandler;
 import tv.vanhal.jacb.ref.Ref;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -27,7 +24,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -71,17 +67,17 @@ public class JACB {
 		
 		//Initialise the block
 		bench = new BlockBench();
-		GameRegistry.register(bench);
-		GameRegistry.register(new ItemBlock(bench).setRegistryName(bench.getRegistryName()));
+		GameRegistry.findRegistry(Block.class).register(bench);
+		GameRegistry.findRegistry(Item.class).register(new ItemBlock(bench).setRegistryName(bench.getRegistryName()));
 		
 		//set recipes
 		ShapelessOreRecipe recipe;
 		if (config.getBoolean("straightSwap", "General", true, "JACB Crafting tables can be crafted by putting a vanilla crafting bench in a crafting grid, other wise it requires a chest as well")) {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE);
+			recipe = new ShapelessOreRecipe(null, new ItemStack(bench), Blocks.CRAFTING_TABLE);
 		} else {
-			recipe = new ShapelessOreRecipe(new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST);
+			recipe = new ShapelessOreRecipe(null, new ItemStack(bench), Blocks.CRAFTING_TABLE, Blocks.CHEST);
 		}
-		GameRegistry.addRecipe(recipe);
+		GameRegistry.findRegistry(IRecipe.class).register(recipe.setRegistryName(bench.getRegistryName()));
 		
 		config.save();
 	}
